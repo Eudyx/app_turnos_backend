@@ -1,5 +1,6 @@
 const InProcess = require('../models/inProcessModel');
 
+// Fetch
 const getInProcess = async (req, res, next) => {
     
     const { limit } = req.query;
@@ -16,6 +17,7 @@ const getInProcess = async (req, res, next) => {
     }
 }
 
+// Socket
 const getProcess = async () => {
     try {
        const process = await InProcess.find();

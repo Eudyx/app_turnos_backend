@@ -18,19 +18,21 @@ io.on('connection', (socket) => {
     console.log('User connected');
     socket.on('disconnect', () => {
         console.log('User disconnected');
-    })
+    });
 
+    // Saves the a turn in db and then sends the updated info to the front
     socket.on('message', async (data) => {
         const dataJson = JSON.parse(data);
         console.log(dataJson)
         await shiftController.saveShift(dataJson); // Saves the turn that was created
         const shifts = await shiftController.getShifts(); //ges 7 turns to show
 
-        // emting
+        // emitting
         socket.broadcast.emit('message', shifts); 
         socket.emit('message', shifts); 
     });
 
+    // Deletes the next turn from the shifts document and save it inProcess document
     socket.on('delete', async (data) => {
         await inProcessController.deleteProcess(data.area); // deletes a trun in process depending the admin area
         await inProcessController.createInProcess({ // create a turn that is in process
@@ -43,25 +45,26 @@ io.on('connection', (socket) => {
         const shifts = await shiftController.getShifts(); //gets 7 turns to show
         const process = await inProcessController.getProcess(); // gets turns in process
         
-        // emting
+        // emitting
         socket.broadcast.emit('process', process);
         socket.broadcast.emit('message', shifts);
         socket.emit('process', process);
         socket.emit('message', shifts);
     });
 
+    // an event to show the next turn
     socket.on('call', (data) => {
         console.log(data);
-        socket.broadcast.emit('call', data); // sends the turn data
+        socket.broadcast.emit('call', data); // emitting
     });
 
-    // resets the data base
+    // resets the data base (the application)
     socket.on('delete-all-shifts', async () => {
         await shiftController.deleteAllShift();
         await inProcessController.deleteAllProcess();
         console.log('All shifts deleted');
 
-        // emting
+        // emitting
         socket.broadcast.emit('delete-all-shifts');
         socket.broadcast.emit('process', []);
         socket.emit('process', []);
