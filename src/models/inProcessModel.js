@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const Shift = new Schema({
+const InProcess = new Schema({
     shift: {
         type: String,
         require: true
@@ -16,4 +16,4 @@ const Shift = new Schema({
     }
 });
 
-module.exports = mongoose.model('Shift', Shift);
+module.exports = mongoose.model('InProcess', InProcess);

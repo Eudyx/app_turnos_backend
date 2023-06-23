@@ -17,5 +17,7 @@ app.use('/', require('./routes/root'));
 app.use('/users', require('./routes/user'));
 app.use('/areas', require('./routes/area'));
 app.use('/shifts', require('./routes/shift'));
+app.use('/login', require('./routes/auth'));
+app.use('/process', require('./routes/inProcess'));
 
 module.exports = app;
