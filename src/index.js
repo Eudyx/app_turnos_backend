@@ -1,12 +1,11 @@
 const app = require('./server');
 const http = require('http');
 const { Server } = require('socket.io');
-const allowedOrigins = require('./config/allowedOrigins');
 
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: `${allowedOrigins[0]}, ${allowedOrigins[1]}`
+        origin: "http://localhost:5173, https://649532b2efda0b3f2292227e--dynamic-baklava-df9725.netlify.app"
     }
 });
 
