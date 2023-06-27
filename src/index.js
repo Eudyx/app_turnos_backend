@@ -1,11 +1,12 @@
 const app = require('./server');
 const http = require('http');
 const { Server } = require('socket.io');
+const allowedOrigins = require('./config/allowedOrigins');
 
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: "http://localhost:5173"
+        origin: `${allowedOrigins[0]}, ${allowedOrigins[1]}`
     }
 });
 
@@ -20,6 +21,7 @@ io.on('connection', (socket) => {
         console.log('User disconnected');
     })
 
+    //Saves the turns in db and then send te information to the frontend
     socket.on('message', async (data) => {
         const dataJson = JSON.parse(data);
         console.log(dataJson)
@@ -31,6 +33,7 @@ io.on('connection', (socket) => {
         socket.emit('message', shifts); 
     });
 
+    //Delete a turn from the 
     socket.on('delete', async (data) => {
         await inProcessController.deleteProcess(data.area); // deletes a trun in process depending the admin area
         await inProcessController.createInProcess({ // create a turn that is in process
