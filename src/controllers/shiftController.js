@@ -1,5 +1,6 @@
 const Shift = require('../models/shiftModel');
 
+// Fetch 
 const getAllShifts = async (req, res, next) => {
     
     const { limit } = req.query;
@@ -16,15 +17,6 @@ const getAllShifts = async (req, res, next) => {
     }
 }
 
-const getShifts = async () => {
-    try {
-       const shift = await Shift.find();
-       return shift;
-    } catch (err) {
-        console.error(err);
-    }
-}
-
 const getFirsShift = async (req, res, next) => {
     try {
         const foundShift = await Shift.findOne({}).sort({ number: -1 }).exec();
@@ -35,6 +27,18 @@ const getFirsShift = async (req, res, next) => {
         console.error(err);
     }
 }
+
+// Socket
+const getShifts = async () => {
+    try {
+       const shift = await Shift.find();
+       return shift;
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+
 
 const saveShift = async (data) => {
     let number = 1;
