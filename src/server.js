@@ -2,12 +2,12 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const dbCon = require('./config/dbConnection');
-const cors = require('cors');
+// const cors = require('cors');
 const corsOptions = require('./config/corsOptions');
 
 dbCon();
 
-app.use(cors(corsOptions))
+app.use(cors())
 
 app.use(express.urlencoded({ extended: false }));
 
